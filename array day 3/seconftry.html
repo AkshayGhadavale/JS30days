@@ -74,57 +74,69 @@
 
       // Array.prototype.filter()
       // 1. Filter the list of inventors for those who were born in the 1500's
-      const fiften = inventors.filter(function (invintor) {
-        if (invintor.year >= 1500 && invintor.year <= 1600) {
-          return true;
-        } else {
-        }
-      });
-      console.table(fiften);
+     const data1 = inventors.filter(function(inventor){
+        if(inventor.year>=1500 && inventor.year<=1600)
+            {
+                return true
+            }
+            else{
+
+            }
+      })
+     console.table(data1)
 
       // Array.prototype.map()
       // 2. Give us an array of the inventors first and last names
-      const fullnames = inventors.map(function(invitor){
-        return invitor.first +" "+invitor.last;
-      })
-console.table(fullnames);
+const fandlnames= inventors.map((inventors)=>{
+    return inventors.first+" "+inventors.last
+})
+
+console.table(fandlnames)
 
       // Array.prototype.sort()
+
       // 3. Sort the inventors by birthdate, oldest to youngest
 
-      const birthorder = inventors.sort(function(a,b){
-if(a.year > b.year){
-    return 1;
-}else{
-    return -1
-}
-      })
-      console.table(birthorder)
+      const oldtoyoung = inventors.sort((a,b)=>{
+        if(a.year> b.year)
+        {
+return 1;
+        }
+        else{
+return -1
+        }})
 
+console.table(oldtoyoung)
       // Array.prototype.reduce()
       // 4. How many years did all the inventors live all together?
+const totalage =inventors.reduce((total,elme)=>{
+    const age = elme.passed - elme.year;
+    console.log(age)
+    return total + age
+},0) //ethe aapan zero  taklay karan defualt total chi vaule undefined aahe so aapn ti 0 thevli
 
-      const totalyear = inventors.reduce(function(total,invi){
-        return total + (invi.passed-invi.year);
-      },0) //ethe aapan zero  taklay karan defualt total chi vaule undefined aahe so aapn ti 0 thevli
-console.log(totalyear)
-
+console.log(totalage)
 
       // 5. Sort the inventors by years lived
 
-      const birtyears = inventors.sort(function(a,b){
-const age1=a.passed-a.year;
-const age2=b.passed-b.year;
+
+      const agewise = inventors.sort((a,b)=>{
+const age1 = a.passed - a.year;
+const age2 = b.passed - b.year;
 
 
-if(age1 > age2){
-    return 1;
-}else{
-    return -1
-}
-      })
-      console.table(birtyears)
+        if(age1< age2)
+        {
+return 1;
+        }
+        else{
+return -1
+        }}).map(invemtor =>{
+        const age =invemtor.passed - invemtor.year;
+        return{...invemtor, age :age}
+      });
 
+console.table(agewise)
 
 
 
@@ -132,33 +144,27 @@ if(age1 > age2){
       // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
       // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
 
-    //   let category = document.querySelector(".mw-category")
-    //  const  links =Array.from(category.querySelectorAll('a'))
+//    const category =document.querySelector('.mw-category');
+// const links =category.querySelectorAll('a')
 
-    //  const delinks3 =links
-    //  .map( text => text.textContent)
-    //  .filter(namet =>namet.includes('de'))
-
+// const delinks = links
+// .map(text1 => text1.textContent)
+// .filter( namede => namede.includes('de'))
       // 7. sort Exercise
       // Sort the people alphabetically by last name
 
-      const lnameorder = people.sort(function(lastone , firstone){
-        const[blast , bfirst]= firstone.split(", ")
-    const[alast , afirst]= lastone.split(", ")
+    const lastnameorder = people.sort((fname,dname)=>{
+        const [alast,afirst] = fname.split(", ");
+        const [blast,bfirst] = dname.split(", ");
 
+        return alast<blast ? 1 : -1 ;
+    })
 
-return alast > blast ? -1 : 1;
-
-
-
-
-      })
-      console.table(lnameorder)
-    
-
-
+console.table(lastnameorder)
       // 8. Reduce Exercise
       // Sum up the instances of each of these]
+
+     
 
       const data = [
         "car",
@@ -177,18 +183,15 @@ return alast > blast ? -1 : 1;
         "truck",
       ];
 
-
-const transport = data.reduce(function(obj ,item){
-    if(!obj[item]){
-        obj[item]=0;
-    }
-   obj[item]++;
-   return obj;
-},{})
-
-console.log(transport)
-
-
+      const transport =  data.reduce((obj,item)=>{
+        console.log(obj[item])
+if(!obj[item]){
+    obj[item]=0
+}
+obj[item]++;
+return obj
+      },{})
+      console.table(transport)
     </script>
   </body>
 </html>
