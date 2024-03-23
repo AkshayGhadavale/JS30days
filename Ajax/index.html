@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Type Ahead 👀</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="https://fav.farm/🔥" />
+</head>
+<style>
+body, html {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #191919; /* Dark background color */
+  color: #ccc; /* Light text color */
+  font-family: Arial, sans-serif; /* Specify a fallback font */
+}
+
+.search-form {
+  text-align: center;
+  position: relative;
+}
+
+.search {
+  padding: 10px;
+  font-size: 16px;
+  width: 300px;
+  margin-bottom: 10px;
+  background-color: #fff; /* White input background color */
+  color: #333; /* Dark text color */
+  border: none;
+  border-radius: 6px;
+  outline: none;
+}
+
+.suggestions {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  width: 300px;
+  background: #222; /* Darker suggestions background color */
+  border: 1px solid #444; /* Darker suggestions border color */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  z-index: 1;
+  border-radius: 6px;
+  overflow-y: auto;
+  max-height: 300px;
+}
+
+.suggestions li {
+  padding: 10px;
+  border-bottom: 1px solid #333; /* Darker border color */
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-align: left;
+  color: #ccc; /* Light text color */
+}
+
+.suggestions li:last-child {
+  border-bottom: none;
+}
+
+.suggestions li:hover {
+  background: #444; /* Darker hover background color */
+}
+
+/* Colorful Dark Mode */
+@media (prefers-color-scheme: dark) {
+  body, html {
+    background-color: #3d3939; /* Darker background color */
+    color: #ccc; /* Light text color */
+  }
+
+  .search {
+    background-color: #fff; /* White input background color */
+    color: #333; /* Dark text color */
+  }
+
+  .suggestions {
+    background: #111; /* Darker suggestions background color */
+    border: 1px solid #333; /* Darker suggestions border color */
+  }
+
+  .suggestions li {
+    color: #ccc; /* Light text color */
+    border-bottom: 1px solid #222; /* Darker border color */
+  }
+
+  .suggestions li:hover {
+    background: #333; /* Darker hover background color */
+  }
+}
+
+</style>
+<body>
+  <form class="search-form">
+    <input type="text" class="search" placeholder="search City or State" />
+    <ul class="suggestions"></ul>
+  </form>
+  <script>
+    const endpoint =
+      "https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json";
+    const cities = [];
+
+    fetch(endpoint)
+      .then((data) => data.json())
+      .then((details) => cities.push(...details));
+
+    function getdata(text, cities) {
+      return cities.filter((place) => {
+        const searchLower = text.toLowerCase();
+        return (
+          place.city.toLowerCase().startsWith(searchLower) ||
+          place.state.toLowerCase().startsWith(searchLower)
+        );
+      });
+    }
+
+    const searchinput = document.querySelector(".search");
+
+    const suggestions = document.querySelector(".suggestions");
+
+    function Displaydata(){
+      const datamatch = getdata(this.value, cities);
+      const htmldata = datamatch.map(data => {
+        return `
+          <li>
+            <span class="name">${data.city}, ${data.state}</span>
+            <span class="population">${data.population}</span>
+          </li>
+        `;
+      }).join('');
+      suggestions.innerHTML = htmldata;
+    }
+
+    searchinput.addEventListener('change', Displaydata);
+    searchinput.addEventListener('keyup', Displaydata);
+  </script>
+</body>
+</html>
